@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Para mi niña 💌</title>
+  <style>
+    body{font-family:system-ui,Segoe UI,Roboto,Arial; background:#0b1020; color:#fff; margin:0; display:grid; place-items:center; min-height:100vh;}
+    .card{max-width:520px; width:92%; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12);
+      border-radius:18px; padding:22px; box-shadow:0 10px 30px rgba(0,0,0,.35)}
+    h1{margin:0 0 6px; font-size:22px}
+    p{opacity:.9; line-height:1.35}
+    .row{display:flex; gap:10px; margin-top:12px}
+    input{flex:1; padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.2); background:rgba(0,0,0,.25); color:#fff; font-size:16px}
+    button{padding:12px 14px; border-radius:12px; border:0; background:#7c5cff; color:#fff; font-weight:700; cursor:pointer}
+    button:hover{filter:brightness(1.07)}
+    .hint{margin-top:10px; font-size:14px; opacity:.85}
+    .ok{margin-top:14px; padding:14px; border-radius:14px; background:rgba(124,92,255,.18); border:1px solid rgba(124,92,255,.35)}
+    .small{font-size:13px; opacity:.8}
+    .hearts{position:fixed; inset:0; pointer-events:none; opacity:.25; background:
+      radial-gradient(circle at 20% 20%, #ff4d8d 0 2px, transparent 3px),
+      radial-gradient(circle at 80% 30%, #ff4d8d 0 2px, transparent 3px),
+      radial-gradient(circle at 30% 80%, #ff4d8d 0 2px, transparent 3px),
+      radial-gradient(circle at 70% 75%, #ff4d8d 0 2px, transparent 3px);
+      background-size:120px 120px; animation:float 8s linear infinite}
+    @keyframes float{to{background-position: 120px 120px, -120px 120px, 120px -120px, -120px -120px}}
+  </style>
+</head>
+<body>
+  <div class="hearts"></div>
+  <div class="card">
+    <h1>Hola, mi Magaleña 💖</h1>
+    <p>Le hice un mini-juego. Si lo resuelve, desbloquea una pista para un regalito por nuestro 06, que es muy importante para mi.</p>
+
+    <p><b>Reto:</b> ¿Cuál es nuestro animal favorito? (Es el suyo, pero lo suyo es mío)</p>
+    <div class="row">
+      <input id="code" placeholder="Escriba aquí..." autocomplete="off" />
+      <button onclick="check()">Probar</button>
+    </div>
+    <div class="hint" id="hint">Pista: ya lo hemos tenido (escriba en minúscula) <b id="firstLetter">S</b>. (Tiene 3 intentos)</div>
+
+    <div id="result"></div>
+    <p class="small">PD: si se enoja con el juego, recuerde que la amo más que a Messi (Y eso ya es mucho decir) ❤️</p>
+  </div>
+
+<script>
+  // ✅ CAMBIE AQUÍ su respuesta correcta (en minúsculas)
+  const ANSWER = "capibara";
+
+  // ✅ CAMBIA AQUÍ la pista final del peluche
+  const FINAL_HINT = "Mire en su corazón (Y en su mochila 😉)";
+
+  let tries = 3;
+
+  document.getElementById("firstLetter").textContent = ANSWER[0].toUpperCase();
+
+  function check(){
+    const input = (document.getElementById("code").value || "").trim().toLowerCase();
+    const res = document.getElementById("result");
+
+    if(!input){
+      res.innerHTML = `<div class="hint">Escriba algo primero 😄</div>`;
+      return;
+    }
+
+    if(input === ANSWER){
+      res.innerHTML = `
+        <div class="ok">
+          <b>¡Correcto, mi amor! 🎉</b><br><br>
+          Su pista final es: <br><br>
+          <b>${FINAL_HINT}</b>
+        </div>`;
+      return;
+    }
+
+    tries--;
+    if(tries <= 0){
+      res.innerHTML = `
+        <div class="ok">
+          <b>Modo trampa activado (ya que le gusta hacer trampa)🥹</b><br>
+          Le doy otra pista: la palabra tiene <b>${ANSWER.length}</b> letras.<br><br>
+          <b>Intente de nuevo</b> 💖
+        </div>`;
+      tries = 2;
+    } else {
+      res.innerHTML = `<div class="hint">Nope 😅 Le quedan <b>${tries}</b> intentos.</div>`;
+    }
+  }
+</script>
+</body>
+</html>
